@@ -33,30 +33,36 @@ func reader()[]string{
 func partOne(input []string) {
 	i:=0
 	for _, line := range input {
+
 		mapp:=make(map[string]int)
-		split:=strings.Split(line," ")
-		gameID,_:=strconv.Atoi(split[1][:len(split[1])-1])
-		//fmt.Println(gameID)
-		
-		for i := 2; i < len(split); i+=2 {
-			count,_:=strconv.Atoi(split[i])
-			tag:=strings.Replace(split[i+1][:len(split[i+1])],",","",-1)
+		split:=strings.Split(line,":")
+		split[1]=strings.Replace(split[1][1:],",","",-1)
+
+		gameID,_:=strconv.Atoi(strings.Split(split[0]," ")[1])
+		sim:=strings.Split(split[1],"; ")
+
+		for _, v := range sim {
+			simG:=strings.Split(v," ")
+
+			for i := 0; i < len(simG); i+=2 {
+				n,_:=strconv.Atoi(simG[i])
+				if (mapp[simG[i+1]]<n){
+					mapp[simG[i+1]]=n
+				}
 			
-			mapp[tag]+=count
+			}
+			
 		}
+		fmt.Println(mapp,gameID)
 		
-		
-		fmt.Println(mapp)
 		for tag := range mapp {
-			if setup[tag]<=mapp[tag]{
-				
-				//fmt.Println(tag,setup[tag],mapp[tag])
+			if setup[tag]<mapp[tag]{	
 				gameID=0
 				break
 			}
-		}
-		fmt.Println(gameID)
-		i+= gameID
+		}	 
+		i+=gameID
+	
 	}
 	fmt.Println(i)
 }
