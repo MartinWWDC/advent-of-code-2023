@@ -9,6 +9,10 @@ import (
 )
 
 func main() {
+
+}
+
+func es1(){
 	arr:=read()
 	sum:=sumArr(arr)
 	fmt.Println(sum)
