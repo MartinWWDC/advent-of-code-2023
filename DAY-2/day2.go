@@ -17,7 +17,8 @@ var setup = map[string]int{
 func main() {
 	//fmt.Println(setup)
 	fp := reader()
-	partOne(fp)
+	//partOne(fp)
+	partTwo(fp)
 
 }
 
@@ -62,6 +63,42 @@ func partOne(input []string) {
 			}
 		}	 
 		i+=gameID
+	
+	}
+	fmt.Println(i)
+}
+func partTwo(input []string) {
+	i:=0
+	for _, line := range input {
+
+		mapp:=make(map[string]int)
+		split:=strings.Split(line,":")
+		split[1]=strings.Replace(split[1][1:],",","",-1)
+
+		gameID,_:=strconv.Atoi(strings.Split(split[0]," ")[1])
+		sim:=strings.Split(split[1],"; ")
+
+		for _, v := range sim {
+			simG:=strings.Split(v," ")
+
+			for i := 0; i < len(simG); i+=2 {
+				n,_:=strconv.Atoi(simG[i])
+				if (mapp[simG[i+1]]<n || mapp[simG[i+1]]==0){
+					mapp[simG[i+1]]=n
+				}
+			
+			}
+			
+		}
+		fmt.Println(mapp,gameID)
+		n:=1
+
+		for tag := range mapp {
+
+			n*=mapp[tag]
+		}	 
+		fmt.Println(n)
+		i+=n
 	
 	}
 	fmt.Println(i)
